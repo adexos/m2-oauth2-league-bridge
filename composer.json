@@ -4,7 +4,7 @@
     "require": {
         "php": ">= 7.4",
         "league/oauth2-client": "^2.6",
-        "firebase/php-jwt": "^5.0",
+        "firebase/php-jwt": "^6.0",
         "symfony/serializer": ">=4.4",
         "symfony/property-access": ">=4.4"
     },
