@@ -1,0 +1,20 @@
+{
+    "name": "adexos/m2-oauth2-league-bridge",
+    "description": "Oauth2 League Magento2 bridge",
+    "require": {
+        "php": ">= 7.4",
+        "league/oauth2-client": "^2.6",
+        "firebase/php-jwt": "^5.0",
+        "symfony/serializer": ">=4.4",
+        "symfony/property-access": ">=4.4"
+    },
+    "type": "magento2-module",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Adexos\\Oauth2LeagueBridge\\": ""
+        }
+    }
+}

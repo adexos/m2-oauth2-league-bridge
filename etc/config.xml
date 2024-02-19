@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <adexos>
+            <oauth2>
+                <base_url/>
+                <client_id/>
+                <client_secret/>
+                <authorize_endpoint/>
+                <access_token_endpoint/>
+                <resource_owner_details_endpoint/>
+            </oauth2>
+        </adexos>
+    </default>
+</config>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Adexos\Oauth2LeagueBridge\Client\OauthClientFactory">
+        <arguments>
+            <argument name="baseUrlConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_BASE_URL
+            </argument>
+            <argument name="clientIdConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_CLIENT_ID
+            </argument>
+            <argument name="clientSecretConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_CLIENT_SECRET
+            </argument>
+            <argument name="authorizeEndpointConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_AUTHORIZE_ENDPOINT
+            </argument>
+            <argument name="accessTokenEndpointConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_ACCESS_TOKEN_ENDPOINT
+            </argument>
+            <argument name="resourceOwnerDetailsEndpointConfigPath" xsi:type="const">
+                Adexos\Oauth2LeagueBridge\Model\Config::XML_PATH_RESOURCE_OWNER_DETAILS_ENDPOINT
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Adexos\Oauth2LeagueBridge\Persistence\SessionPersistence">
+        <arguments>
+            <argument name="sessionManager" xsi:type="object">
+                Magento\Customer\Model\Session
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- SF Serializer -->
+    <type name="Adexos\Oauth2LeagueBridge\Decoder\JwtDecoder">
+        <arguments>
+            <argument name="serializer" xsi:type="object">JwtSerializer</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="JwtSerializer" type="Symfony\Component\Serializer\Serializer">
+        <arguments>
+            <argument name="normalizers" xsi:type="array">
+                <item name="DateTimeNormalizer" xsi:type="object">
+                    Symfony\Component\Serializer\Normalizer\DateTimeNormalizer
+                </item>
+                <item name="ObjectNormalizer" xsi:type="object">
+                    JwtObjectNormalizer
+                </item>
+            </argument>
+            <argument name="encoders" xsi:type="array">
+                <item name="JsonEncoder" xsi:type="object">
+                    Symfony\Component\Serializer\Encoder\JsonEncoder
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="JwtObjectNormalizer" type="Symfony\Component\Serializer\Normalizer\ObjectNormalizer">
+        <arguments>
+            <argument name="nameConverter" xsi:type="object">
+                Symfony\Component\Serializer\NameConverter\CamelCaseToSnakeCaseNameConverter
+            </argument>
+            <argument name="propertyTypeExtractor" xsi:type="object">
+                Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- END SF Serializer -->
+</config>
