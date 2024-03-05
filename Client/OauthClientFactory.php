@@ -13,7 +13,6 @@ use League\OAuth2\Client\Provider\GenericProvider;
 use League\OAuth2\Client\Provider\GenericProviderFactory;
 use League\OAuth2\Client\Token\AccessTokenInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Encryption\EncryptorInterface;
 
 /**
  * Provides a layer that allow to do specific behavior on endpoints along with
@@ -26,8 +25,6 @@ abstract class OauthClientFactory
     protected GenericProviderFactory $genericProviderFactory;
 
     protected ScopeConfigInterface $scopeConfig;
-
-    protected EncryptorInterface $encryptor;
 
     protected Time $time;
 
@@ -53,7 +50,6 @@ abstract class OauthClientFactory
     public function __construct(
         GenericProviderFactory $genericProviderFactory,
         ScopeConfigInterface $scopeConfig,
-        EncryptorInterface $encryptor,
         Time $time,
         string $baseUrlConfigPath,
         string $clientIdConfigPath,
@@ -66,7 +62,6 @@ abstract class OauthClientFactory
     ) {
         $this->genericProviderFactory = $genericProviderFactory;
         $this->scopeConfig = $scopeConfig;
-        $this->encryptor = $encryptor;
         $this->time = $time;
         $this->baseUrlConfigPath = $baseUrlConfigPath;
         $this->clientIdConfigPath = $clientIdConfigPath;
@@ -127,16 +122,8 @@ abstract class OauthClientFactory
         if ($this->genericProvider === null) {
             $this->genericProvider = $this->genericProviderFactory->create([
                 'options' => [
-                    'clientId' => $this->encryptor->decrypt(
-                        $this->scopeConfig->getValue(
-                            $this->clientIdConfigPath
-                        )
-                    ),
-                    'clientSecret' => $this->encryptor->decrypt(
-                        $this->scopeConfig->getValue(
-                            $this->clientSecretConfigPath
-                        )
-                    ),
+                    'clientId'                => $this->scopeConfig->getValue($this->clientIdConfigPath),
+                    'clientSecret'            => $this->scopeConfig->getValue($this->clientSecretConfigPath),
                     'urlAuthorize'            => $this->getFullUrl($this->authorizeEndpointConfigPath),
                     'urlAccessToken'          => $this->getFullUrl($this->accessTokenEndpointConfigPath),
                     'urlResourceOwnerDetails' => $this->getFullUrl($this->resourceOwnerDetailsEndpointConfigPath)

@@ -59,6 +59,8 @@ Then you can add your own configuration in the `di.xml` :
 
 The paths refer to your configuration. It's up to you to create your own `system.xml` depending on the path you give.
 
+**Optional** : You can set the backend_model entry in your `system.xml` as "Magento\Config\Model\Config\Backend\Encrypted" if you want to store your client secret in an encrypted way.
+
 Here is a template as an example :
 
 ```xml

@@ -67,7 +67,6 @@ class OauthClientFactoryTest extends TestCase
         $this->oauthClientFactory = new class(
             $genericProvider,
             $this->createMock(ScopeConfigInterface::class),
-            $this->createMock(EncryptorInterface::class),
             $time,
             '',
             '',
