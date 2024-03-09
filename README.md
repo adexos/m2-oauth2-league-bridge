@@ -59,6 +59,55 @@ Then you can add your own configuration in the `di.xml` :
 
 The paths refer to your configuration. It's up to you to create your own `system.xml` depending on the path you give.
 
+**Optional** : You can set the backend_model entry in your `config.xml` and `system.xml` as `Magento\Config\Model\Config\Backend\Encrypted` if you want to store your client secret in an encrypted way.
+
+Example : 
+
+```xml
+<!-- config.xml -->
+
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <adexos>
+            <oauth2>
+                <client_secret backend_model="Magento\Config\Model\Config\Backend\Encrypted"/>
+            </oauth2>
+        </adexos>
+    </default>
+</config>
+```
+
+```xml
+<!-- system.xml -->
+
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="adexos_tab" translate="label" sortOrder="145">
+            <label>Adexos</label>
+        </tab>
+
+        <section id="adx" translate="label" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Reach 5</label>
+            <tab>adeo_tab</tab>
+            <resource>Magento_Config::config</resource>
+            <group id="oauth2_identity" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <field id="client_secret" translate="label" type="obscure" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Client Secret</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+```
+
 Here is a template as an example :
 
 ```xml
