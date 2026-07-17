@@ -37,7 +37,7 @@ class SessionManagerMock implements SessionManagerInterface
     {
     }
 
-    public function destroy(array $options = null)
+    public function destroy(?array $options = null)
     {
     }
 

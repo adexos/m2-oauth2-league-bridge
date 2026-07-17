@@ -57,8 +57,8 @@ abstract class OauthClientFactory
         string $authorizeEndpointConfigPath,
         string $accessTokenEndpointConfigPath,
         string $resourceOwnerDetailsEndpointConfigPath,
-        PersistenceInterface $persistence = null,
-        OptionProviderInterface $optionProvider = null
+        ?PersistenceInterface $persistence = null,
+        ?OptionProviderInterface $optionProvider = null
     ) {
         $this->genericProviderFactory = $genericProviderFactory;
         $this->scopeConfig = $scopeConfig;
